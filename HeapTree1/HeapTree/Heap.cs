@@ -44,16 +44,49 @@ namespace HeapTree
         }
 
 
-        T Pop()
+        public T Pop()
         {
+            //save root
+            T root = heap[0];
+            heap[0] = heap[heap.Count - 1];
+            heap.RemoveAt(heap.Count - 1);
 
+            //HeapifyDown
+            HeapifyDown(0);
+
+            return root;
 
         }
 
 
-        void HeapifyDown()
+        void HeapifyDown(int ind)
         {
+            int leftind = (ind * 2) + 1;
+            int rightind = (ind * 2) + 2;
+            if((heap[ind].CompareTo(heap[leftind]) < 0 && heap[ind].CompareTo(heap[rightind]) < 0) || ind >= heap.Count - 1)
+            {
+                return;
+            }
 
+            int minind = 0;
+            T leftChild = heap[leftind];
+            T rightChild = heap[rightind];
+            //find min child and swap
+            if (leftChild.CompareTo(rightChild) < 0)
+            {
+                minind = leftind;
+            }
+
+            else
+            {
+                minind = rightind;
+            }
+
+            T temp = heap[minind];
+            heap[minind] = heap[ind];
+            heap[ind] = temp;
+
+            HeapifyDown(minind);
         }
 
 
