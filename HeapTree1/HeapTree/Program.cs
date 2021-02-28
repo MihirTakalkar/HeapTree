@@ -7,15 +7,26 @@ namespace HeapTree
     {
         static void Main(string[] args)
         {
-            List<int> test = new List<int>{ 1, 9, 2, 13, 10, 3 };
+            List<int> test = new List<int>();
+
+            Random rand = new Random();
+
+            for (int i = 0; i < 10; i++)
+            {
+                test.Add(rand.Next(1, 100));
+            }
+
             Heap<int> heaptest = new Heap<int>();
             for (int i = 0; i < test.Count; i++)
             {
                 heaptest.Insert(test[i]);
             }
-            heaptest.Insert(0);
 
-       
+            for (int i = 0; i < test.Count; i++)
+            {
+                Console.WriteLine(heaptest.Pop());
+            }
+            
         }
     }
 }

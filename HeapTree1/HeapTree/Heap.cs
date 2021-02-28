@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HeapTree
 {
-    class Heap<T> where T: IComparable
+    class Heap<T> where T : IComparable
     {
         List<T> heap = new List<T>();
         public void Insert(T val)
@@ -17,7 +17,7 @@ namespace HeapTree
 
         void HeapifyUp(int ind)
         {
-            if(ind == 0)
+            if (ind == 0)
             {
                 //if root is reached
                 return;
@@ -62,29 +62,43 @@ namespace HeapTree
         void HeapifyDown(int ind)
         {
             int leftind = (ind * 2) + 1;
-            int rightind = (ind * 2) + 2;
-            if((heap[ind].CompareTo(heap[leftind]) < 0 && heap[ind].CompareTo(heap[rightind]) < 0) || ind >= heap.Count - 1)
+
+            if (leftind >= heap.Count)
             {
                 return;
             }
 
-            int minind = 0;
-            T leftChild = heap[leftind];
-            T rightChild = heap[rightind];
-            //find min child and swap
-            if (leftChild.CompareTo(rightChild) < 0)
+            int rightind = (ind * 2) + 2;
+            int minind = ind;
+
+            if (rightind >= heap.Count)
             {
                 minind = leftind;
             }
 
             else
             {
-                minind = rightind;
+                T leftChild = heap[leftind];
+                T rightChild = heap[rightind];
+                //find min child and swap
+                if (leftChild.CompareTo(rightChild) < 0)
+                {
+                    minind = leftind;
+                }
+
+                else
+                {
+                    minind = rightind;
+                }
             }
 
-            T temp = heap[minind];
-            heap[minind] = heap[ind];
-            heap[ind] = temp;
+
+            if(heap[ind].CompareTo(heap[minind]) > 0)
+            {
+                T temp = heap[minind];
+                heap[minind] = heap[ind];
+                heap[ind] = temp;
+            }
 
             HeapifyDown(minind);
         }
